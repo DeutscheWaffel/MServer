@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.example'
+version = '1.0.0'
+
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://maven.minecraftforge.net/"
+    }
+}
+
+dependencies {
+    implementation 'net.minecraftforge:forge:1.21.4-54.1.0' // Проверьте актуальную версию на сайте Forge
+}
+
+tasks.named('shadowJar') {
+    archiveFileName = "minecraft-server.jar"
+}
+
+task downloadServer(type: Exec) {
+    commandLine 'wget', '-O', 'forge-installer.jar', 
+    "https://maven.minecraftforge.net/net/minecraftforge/forge/1.21.4-54.1.0/forge-1.21.4-54.1.0-installer.jar"
+    
+    doLast {
+        exec {
+            commandLine 'java', '-jar', 'forge-installer.jar', '--installServer'
+        }
+    }
+}

@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  minecraft:
+    build: .
+    ports:
+      - "25565:25565"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./world:/app/world
+      - ./logs:/app/logs
+      - ./config:/app/config
